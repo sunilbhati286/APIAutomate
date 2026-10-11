@@ -15,16 +15,28 @@ public class NonBDDPutRequest {
     @Test
     public void putRequestAPI(){
 
-        String token = "5ec3273bc1f7f4f";
+        String token = "b18f73837f7b354"; // Adding the Static token
         String id = "2206";
+        String payLoad = "{\n" +
+                "    \"firstname\" : \"Hinal\",\n" +
+                "    \"lastname\" : \"Bhati\",\n" +
+                "    \"totalprice\" : 115,\n" +
+                "    \"depositpaid\" : true,\n" +
+                "    \"bookingdates\" : {\n" +
+                "        \"checkin\" : \"2018-01-01\",\n" +
+                "        \"checkout\" : \"2019-01-01\"\n" +
+                "    },\n" +
+                "    \"additionalneeds\" : \"Breakfast\"\n" +
+                "}";
         request = RestAssured.given();
         request.baseUri("https://restful-booker.herokuapp.com");
         request.basePath("/booking/"+id);
         request.contentType(ContentType.JSON);
         request.cookies("token" , token);
+        request.body(payLoad);
 
         response = request.when().log().all().put();
 
-        validatableResponse = response.then().log().all().statusCode(404);
+        validatableResponse = response.then().log().all().statusCode(200);
     }
 }
